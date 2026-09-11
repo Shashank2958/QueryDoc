@@ -41,7 +41,7 @@ with st.sidebar:
         # Poora processing (extract -> chunk -> embed -> store) ek
         # spinner ke peeche chalta hai -- user ko chunk-count jaisi
         # technical details nahi dikhti, bas ek loading indicator.
-        with st.spinner("PDF process ho raha hai..."):
+        with st.spinner("PDF is processing..."):
             extracted_text = extract_text_from_pdf(uploaded_file)
             chunks = split_text_into_chunks(extracted_text)
             embeddings = get_embeddings(embedding_model, chunks)
