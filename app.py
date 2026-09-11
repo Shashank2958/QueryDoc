@@ -43,12 +43,16 @@ with st.sidebar:
         # technical details nahi dikhti, bas ek loading indicator.
         with st.spinner("PDF is processing..."):
             extracted_text = extract_text_from_pdf(uploaded_file)
-            chunks = split_text_into_chunks(extracted_text)
-            embeddings = get_embeddings(embedding_model, chunks)
-            store_chunks(collection, chunks, embeddings)
- 
-        st.session_state.pdf_ready = True
-        st.success("PDF uploaded successfully..")
+            if not extracted_text:
+                st.error("We are not able to extract this text from pdf--May be this is a scanned or image based pdf so currently we not devloped for that..")
+            else:
+                with st.spinner("PDF is processing..."):
+                    chunks = split_text_into_chunks(extracted_text)
+                    embeddings = get_embeddings(embedding_model, chunks)
+                    store_chunks(collection, chunks, embeddings)
+    
+                st.session_state.pdf_ready = True
+                st.success("PDF uploaded successfully..")
  
     st.divider()
  
