@@ -44,7 +44,7 @@ with st.sidebar:
         with st.spinner("PDF is processing..."):
             extracted_text = extract_text_from_pdf(uploaded_file)
             if not extracted_text:
-                st.error("We are not able to extract this text from pdf--May be this is a scanned or image based pdf so currently we not devloped for that..")
+                st.error("We are not able to extract this text from pdf--(May be this is a scanned or image based pdf so currently we are not developed for that..) ,Please upload any other pdf")
             else:
                 with st.spinner("PDF is processing..."):
                     chunks = split_text_into_chunks(extracted_text)
