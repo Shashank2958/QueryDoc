@@ -43,17 +43,32 @@ with st.sidebar:
         # technical details nahi dikhti, bas ek loading indicator.
         with st.spinner("PDF is processing..."):
             extracted_text = extract_text_from_pdf(uploaded_file)
-            if not extracted_text:
-                st.error("We are not able to extract this text from pdf--(May be this is a scanned or image based pdf so currently we are not developed for that..) ,Please upload any other pdf")
+            
+        if not extracted_text.strip():
+            st.error(
+                "Is PDF se koi text nahi nikal paaya. Ye shayad ek "
+                "scanned/image-based PDF hai. Abhi sirf un PDFs ko "
+                "support karte hain jinme selectable/copyable text ho."
+            )
+        else:
+            with st.spinner("PDF process ho raha hai..."):
+           
+                chunks = split_text_into_chunks(extracted_text)
+                
+            if not chunks:
+                st.error(
+                    "Is PDF se koi usable content nahi mila. Koi "
+                    "doosri PDF try karo."
+                )
+                
             else:
-                with st.spinner("PDF is processing..."):
-                    chunks = split_text_into_chunks(extracted_text)
+                with st.spinner("pdf is processing"):
                     embeddings = get_embeddings(embedding_model, chunks)
                     store_chunks(collection, chunks, embeddings)
     
                 st.session_state.pdf_ready = True
                 st.success("PDF uploaded successfully..")
- 
+    
     st.divider()
  
     # --- Chat History Sidebar: sirf titles, click karne pe khulte hain ---
